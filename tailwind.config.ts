@@ -57,6 +57,22 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        medical: {
+          blue: "hsl(var(--medical-blue))",
+          green: "hsl(var(--medical-green))",
+          light: "hsl(var(--medical-light))",
+        },
+        status: {
+          online: "hsl(var(--status-online))",
+          away: "hsl(var(--status-away))",
+          busy: "hsl(var(--status-busy))",
+        },
+        channel: {
+          whatsapp: "hsl(var(--whatsapp))",
+          instagram: "hsl(var(--instagram))",
+          facebook: "hsl(var(--facebook))",
+          email: "hsl(var(--email))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
