@@ -18,6 +18,8 @@ import {
 import { Conversation, Message } from '@/types';
 import { mockConversations } from '@/data/mockData';
 import ChannelIcon from './ChannelIcon';
+import AIAssistant from './AIAssistant';
+import SentimentAnalysis from './SentimentAnalysis';
 
 interface AttendantDashboardProps {
   userId: string;
@@ -68,7 +70,7 @@ const AttendantDashboard: React.FC<AttendantDashboardProps> = ({ userId }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-200px)]">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 h-[calc(100vh-200px)]">
       {/* Conversations List */}
       <Card className="lg:col-span-1">
         <CardHeader>
@@ -169,7 +171,21 @@ const AttendantDashboard: React.FC<AttendantDashboardProps> = ({ userId }) => {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="flex flex-col h-[500px]">
+            
+            {/* Sentiment Analysis for patient messages */}
+            {selectedConversation.messages.filter(m => m.isFromPatient).length > 0 && (
+              <div className="px-6 pb-2">
+                <SentimentAnalysis 
+                  message={
+                    selectedConversation.messages
+                      .filter(m => m.isFromPatient)
+                      .slice(-1)[0]?.content || ''
+                  }
+                />
+              </div>
+            )}
+            
+            <CardContent className="flex flex-col h-[400px]">
               {/* Messages */}
               <ScrollArea className="flex-1 mb-4">
                 <div className="space-y-4 p-2">
@@ -248,6 +264,18 @@ const AttendantDashboard: React.FC<AttendantDashboardProps> = ({ userId }) => {
           </CardContent>
         )}
       </Card>
+
+      {/* AI Assistant Panel */}
+      <div className="lg:col-span-1">
+        <AIAssistant 
+          patientMessage={
+            selectedConversation?.messages
+              .filter(m => m.isFromPatient)
+              .slice(-1)[0]?.content
+          }
+          onSuggestionApply={(suggestion) => setNewMessage(suggestion)}
+        />
+      </div>
     </div>
   );
 };

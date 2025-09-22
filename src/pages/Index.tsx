@@ -13,6 +13,7 @@ import { mockUsers } from '@/data/mockData';
 import Layout from '@/components/Layout';
 import AttendantDashboard from '@/components/AttendantDashboard';
 import ManagerDashboard from '@/components/ManagerDashboard';
+import RealTimeNotifications from '@/components/RealTimeNotifications';
 
 const Index = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -143,11 +144,20 @@ const Index = () => {
 
   return (
     <Layout user={currentUser} onLogout={handleLogout}>
-      {currentUser.role === 'attendant' ? (
-        <AttendantDashboard userId={currentUser.id} />
-      ) : (
-        <ManagerDashboard />
-      )}
+      <div className="flex gap-6">
+        <div className="flex-1">
+          {currentUser.role === 'attendant' ? (
+            <AttendantDashboard userId={currentUser.id} />
+          ) : (
+            <ManagerDashboard />
+          )}
+        </div>
+        
+        {/* Notifications Sidebar */}
+        <div className="w-80">
+          <RealTimeNotifications userId={currentUser.id} />
+        </div>
+      </div>
     </Layout>
   );
 };
